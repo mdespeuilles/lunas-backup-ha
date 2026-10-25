@@ -1,0 +1,25 @@
+name: "Lunas Backup Agent"
+version: "0.1.0"
+slug: "lunas_agent"
+description: "Envoie les sauvegardes de Home Assistant vers un S3, pilotées par Lunas Backup."
+url: "https://github.com/mdespeuilles/lunas-backup-ha"
+arch:
+  - aarch64
+  - amd64
+init: false
+startup: application
+boot: auto
+# The agent copies Home Assistant's own backups (never /config while it runs).
+# Writable so a restore from Lunas lands back in Settings > System > Backups.
+map:
+  - type: backup
+    read_only: false
+options:
+  server: ""
+  ca_sha256: ""
+  token: ""
+schema:
+  server: "match(^[^:\\s]+:[0-9]+$)"
+  ca_sha256: "match(^[0-9a-f]{64}$)"
+  token: "str?"
+  download_url: "url?"
